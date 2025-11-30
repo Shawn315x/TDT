@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Essential for mobile responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDT Script Analyzer tool</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Apply the Inter font globally */
+        :root {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for highlighting */
+        .highlight { 
+            font-weight: 600; /* semi-bold */
+            color: white; 
+            padding: 2px 4px; 
+            border-radius: 4px; 
+            line-height: 2.2; /* ensures blocks wrap nicely */
+            margin-right: 2px;
+            display: inline-block;
+        }
+        /* Style for the summary table */
+        #summary table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: 0.5rem; /* rounded corners for the whole table */
+        }
+        #summary th, #summary td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb; /* light gray divider */
+        }
+        #summary th {
+            background-color: #f3f4f6;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        #summary tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <!-- Main card structure using Tailwind -->
+    <div class="w-full max-w-5xl bg-white shadow-2xl rounded-xl p-6 md:p-10 border border-gray-200">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-blue-700 text-center mb-6">
+            TDT Script Analyzer
+        </h1>
+        <div id="appContainer">
+            <!-- CSV Loader -->
+            <div class="mb-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
+                <label for="csvFile" class="block text-sm md:text-lg font-bold text-blue-800 mb-2">
+                    1. Load TDT Dictionary (CSV: Word,Category)
+                </label>
+                <input type="file" id="csvFile" accept=".csv" class="w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer">
+                <p id="statusMessage" class="text-sm mt-2 text-red-500 font-medium h-4"></p>
+            </div>
+
+            <!-- Script Input -->
+            <div class="mb-6">
+                <label for="scriptInput" class="block text-lg font-bold text-gray-700 mb-2">
+                    2. Paste your script/text here:
+                </label>
+                <textarea id="scriptInput" rows="8" placeholder="Start typing or pasting your script..." class="w-full p-4 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 resize-none shadow-inner text-sm"></textarea>
+            </div>
+
+            <!-- Action Button -->
+            <button 
+                onclick="analyzeScript()"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-xl transition duration-300 ease-in-out transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 mb-8 disabled:opacity-50 disabled:cursor-not-allowed"
+                id="analyzeButton"
+            >
+                3. Analyze Script
+            </button>
+
+            <!-- Results Section -->
+            <div id="results">
+                <h2 class="text-2xl font-semibold text-gray-800 border-b pb-2 mb-4">
+                    Analysis Results
+                </h2>
+
+                <!-- Summary Table -->
+                <div id="summary" class="mb-8">
+                    <p class="text-gray-500 italic p-2">Load a dictionary and analyze a script to see the category breakdown here.</p>
+                </div>
+
+                <!-- Highlighted Text -->
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <h3 class="text-xl font-medium text-gray-700 mb-3">Highlighted Text</h3>
+                    <div id="highlightedText" class="text-base leading-relaxed whitespace-pre-wrap p-2 min-h-16">
+                        <!-- Highlighted text will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tdtDictionary = {};
+        const statusMessage = document.getElementById('statusMessage');
+        const analyzeButton = document.getElementById('analyzeButton');
+
+        // Simple function to assign color per category (Tailwind-friendly palette)
+        function getColor(category) {
+            const colors = {
+                "Temporal": "#ef4444", // Red 500
+                "Displacement": "#3b82f6", // Blue 500
+                "Emotion": "#f59e0b", // Amber 500
+                "Action": "#10b981", // Emerald 500
+                "Other": "#8b5cf6" // Violet 500
+            };
+            return colors[category] || "#9ca3af"; // Gray 400 fallback
+        }
+
+        function parseCSV(csvText) {
+            const lines = csvText.split(/\r?\n/).filter(line => line.trim() !== '');
+            const dict = {};
+            for (let line of lines) {
+                const parts = line.split(',');
+                if(parts.length >= 2) {
+                    // Takes the first part as word/phrase and the second as category
+                    const word = parts[0].trim().toLowerCase();
+                    const category = parts[1].trim();
+                    if(word && category) {
+                        dict[word] = category;
+                    }
+                }
+            }
+            return dict;
+        }
+
+        // Load CSV file
+        document.getElementById('csvFile').addEventListener('change', function(e){
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e){
+                    tdtDictionary = parseCSV(e.target.result);
+                    
+                    if (Object.keys(tdtDictionary).length > 0) {
+                        statusMessage.textContent = `CSV loaded successfully! Dictionary size: ${Object.keys(tdtDictionary).length} entries.`;
+                        statusMessage.classList.remove('text-red-500');
+                        statusMessage.classList.add('text-green-600');
+                        analyzeButton.disabled = false;
+                    } else {
+                        statusMessage.textContent = "Error: CSV loaded but no valid entries were found. Check format (Word,Category).";
+                        statusMessage.classList.remove('text-green-600');
+                        statusMessage.classList.add('text-red-500');
+                        analyzeButton.disabled = true;
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function analyzeScript() {
+            if(Object.keys(tdtDictionary).length === 0) {
+                statusMessage.textContent = "Error: Please load a CSV dictionary first!";
+                statusMessage.classList.remove('text-green-600');
+                statusMessage.classList.add('text-red-500');
+                return;
+            }
+            
+            const text = document.getElementById('scriptInput').value;
+            if (text.trim() === '') {
+                 statusMessage.textContent = "Error: Please paste a script to analyze!";
+                 statusMessage.classList.remove('text-green-600');
+                 statusMessage.classList.add('text-red-500');
+                 return;
+            }
+
+            // Split by whitespace and include surrounding punctuation in the token for re-assembly
+            const words = text.split(/(\s+/); 
+            
+            let categoryCounts = {};
+            let highlightedText = '';
+            
+            // Loop through each token (word or whitespace)
+            for(let token of words) {
+                if (!token.trim()) {
+                    // It's just whitespace, append it directly
+                    highlightedText += token;
+                    continue;
+                }
+                
+                // Regex to separate punctuation from the word core
+                const match = token.match(/^([.,!?;:'"()]*)(.*?)([.,!?;:'"()]*)$/);
+                let prePunctuation = '';
+                let cleanWord = token.toLowerCase();
+                let postPunctuation = '';
+
+                if (match) {
+                    prePunctuation = match[1];
+                    cleanWord = match[2].toLowerCase();
+                    postPunctuation = match[3];
+                }
+
+                if(tdtDictionary[cleanWord]) {
+                    const category = tdtDictionary[cleanWord];
+                    categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+                    
+                    // Reassemble with highlighting applied only to the clean word
+                    highlightedText += `${prePunctuation}<span class=\"highlight\" style=\"background-color:${getColor(category)}\">${cleanWord}</span>${postPunctuation}`;
+                } else {
+                    // If not found, append the original token
+                    highlightedText += token;
+                }
+            }
+            
+            // Display summary table
+            let summaryHTML = '<table><thead><tr><th>Category</th><th>Count</th></tr></thead><tbody>';
+            const sortedCounts = Object.entries(categoryCounts).sort(([,a], [,b]) => b - a);
+            
+            if (sortedCounts.length === 0) {
+                summaryHTML = '<p class=\"text-gray-500 italic p-2\">No dictionary terms were found in the script.</p>';
+            } else {
+                for(const [cat, count] of sortedCounts) {
+                    summaryHTML += `<tr><td><span class=\"highlight\" style=\"background-color:${getColor(cat)}\">${cat}</span></td><td>${count}</td></tr>`;
+                }
+                summaryHTML += '</tbody></table>';
+            }
+            
+            document.getElementById('summary').innerHTML = summaryHTML;
+            document.getElementById('highlightedText').innerHTML = highlightedText;
+
+            // Clear status message after successful analysis
+            if (statusMessage.classList.contains('text-red-500')) {
+                 statusMessage.textContent = '';
+            }
+        }
+
+        // Disable button initially until CSV is loaded
+        analyzeButton.disabled = true;
+    </script>
+</body>
+</html>
