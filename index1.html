@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporal Displacement Theory (TDT) - Interactive Infographic</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- 
+    source_material_analysis:
+    - Core Theme: Time is a static field of parallel layers; awareness moves, bodies don't.
+    - Key Mechanisms: Consciousness (Navigator), Identity (Anchor), Seams (Boundaries).
+    - Data Points for Viz: 
+        1. Perception of Time (River vs Stack).
+        2. Composition of Reality (Primary Layer vs Seams).
+        3. Identity Strength correlation with Stability.
+        4. Frequency/Types of Echo Phenomena.
+        5. Relationship between Stress and Displacement magnitude.
+    - Palette: Vibrant/Electric (Indigo, Fuchsia, Cyan) to match the "Micro-reality/Sci-fi" tone but keep it professional.
+    
+    narrative_plan:
+    1. Header: Hook the user with the definition.
+    2. Architecture: Explain the "Stack of Panes" vs Linear time using a comparison chart.
+    3. The Navigator: Radar chart showing inputs (Emotion, Memory, etc.) that steer consciousness.
+    4. Identity: Line chart showing Stability over time for Strong vs Weak identity.
+    5. Echoes: Polar Area chart categorizing Déjà Vu, Premonitions, etc.
+    6. Displacement: Bubble/Scatter chart showing Stress vs Displacement Magnitude.
+    7. NEW LLM FEATURE: Temporal Event Analyzer using Gemini API.
+    8. Conclusion: Summary of the Personal Layer.
+    
+    visualization_choices:
+    1. Composition of Now -> Goal: Inform -> Doughnut Chart (Chart.js) -> Shows the ratio of Primary Layer focus vs Peripheral Seam awareness.
+    2. Navigation Influences -> Goal: Relationships -> Radar Chart (Chart.js) -> Shows the multi-variate inputs (Emotion, Memory, Instinct) guiding the mind.
+    3. Identity Stability -> Goal: Change/Compare -> Line Chart (Chart.js) -> Compares the volatility of experience between Strong and Weak identities.
+    4. Echo Phenomena -> Goal: Compare -> Polar Area Chart (Chart.js) -> Visually distinct way to categorize the different types of "slippage" artifacts.
+    5. Stress vs Displacement -> Goal: Relationships -> Bubble Chart (Chart.js) -> Shows correlation between Emotional Stress (X), Focus (Y), and Event Magnitude (R).
+    6. Temporal Event Analyzer -> Goal: Organize/Relate -> Gemini LLM Text Generation -> Analyzes user input based on TDT framework.
+    
+    confirmations:
+    - NO SVG used.
+    - NO Mermaid JS used.
+    - Palette: Vibrant Indigo/Fuchsia.
+    -->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F3F4F6; /* Gray-100 */
+            color: #1F2937; /* Gray-800 */
+        }
+
+        /* Chart Container Styling - MANDATORY */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            /* Responsive Heights */
+            height: 300px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+                max-width: 100%; /* Occupy full parent width */
+            }
+        }
+
+        /* Custom "Pane" Visuals for CSS-only diagram */
+        .pane-stack {
+            perspective: 1000px;
+        }
+        .pane {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #4F46E5;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transform: rotateX(10deg) rotateY(-5deg) rotateZ(0deg);
+            transition: transform 0.3s ease;
+        }
+        .pane:hover {
+            transform: rotateX(0deg) rotateY(0deg) scale(1.05);
+            z-index: 10;
+            background: #fff;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased selection:bg-indigo-200">
+
+    <!-- Title Section -->
+    <header class="bg-gradient-to-r from-indigo-900 to-purple-800 text-white py-16 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight">TEMPORAL DISPLACEMENT THEORY</h1>
+            <p class="text-xl md:text-2xl text-indigo-200 max-w-3xl mx-auto">
+                Time is not a straight line. It is a multi-layered field of parallel micro-realities.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-12 space-y-16">
+
+        <!-- Section 1: Introduction & Architecture -->
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-5 bg-white p-8 rounded-xl shadow-md border-t-4 border-indigo-500">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">1. The Layered Architecture</h2>
+                <p class="mb-4 text-gray-600 leading-relaxed">
+                    TDT proposes that time does not flow like a river. Instead, it exists as a static "stack of panes." Each pane represents a near-identical version of the present moment. Our bodies stay put, but our <strong>awareness</strong> shifts subtly across these layers.
+                </p>
+                <p class="text-gray-600 font-medium">
+                    We create the illusion of flow by moving our consciousness through these static structures, like a projector running through film frames.
+                </p>
+            </div>
+            
+            <!-- CSS Diagram: The Stack of Panes -->
+            <div class="md:col-span-7 flex flex-col items-center justify-center bg-indigo-50 rounded-xl p-8 pane-stack h-96 overflow-hidden relative">
+                <div class="absolute top-4 left-4 bg-white px-3 py-1 rounded shadow text-sm font-bold text-indigo-600">Visualizing the "Panes"</div>
+                <!-- Stacked Panes via CSS -->
+                <div class="pane w-64 h-40 absolute -top-4 opacity-50 flex items-center justify-center text-gray-400 font-mono text-xs">Future Potential Layer</div>
+                <div class="pane w-64 h-40 absolute top-8 opacity-70 flex items-center justify-center text-gray-400 font-mono text-xs">Near-Future Layer</div>
+                <div class="pane w-64 h-40 absolute top-20 bg-indigo-600 border-indigo-400 text-white z-10 flex items-center justify-center font-bold shadow-2xl">
+                    PRIMARY LAYER<br>(Your "Now")
+                </div>
+                <div class="pane w-64 h-40 absolute top-32 opacity-70 flex items-center justify-center text-gray-400 font-mono text-xs">Immediate Past Layer</div>
+                <div class="pane w-64 h-40 absolute top-44 opacity-50 flex items-center justify-center text-gray-400 font-mono text-xs">Deep Past Layer</div>
+            </div>
+        </section>
+
+        <!-- Section 2: Composition of Reality -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">The Texture of Awareness</h3>
+                    <p class="text-gray-600 text-sm">
+                        While we spend most of our time in our "Primary Layer," TDT suggests our mind constantly samples the "Seams"—the boundaries between realities. This chart visualizes the distribution of human awareness.
+                    </p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="realityCompChart"></canvas>
+                </div>
+            </div>
+            <div class="flex flex-col justify-center space-y-4">
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-8 border-cyan-400">
+                    <h4 class="text-lg font-bold text-gray-800">The Primary Layer</h4>
+                    <p class="text-gray-600 text-sm mt-1">The pane where your identity is most anchored. 95% of your conscious processing happens here, ensuring continuity.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-8 border-fuchsia-400">
+                    <h4 class="text-lg font-bold text-gray-800">The Seams (Slippage)</h4>
+                    <p class="text-gray-600 text-sm mt-1">Thin places between panes. 5% of awareness drifts here, causing intuition, déjà vu, and strange echoes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Navigator (Consciousness) -->
+        <section>
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">2. Consciousness: The Active Navigator</h2>
+                <p class="text-gray-600">
+                    Your mind is not a passive observer. It is an active agent that "anchors" you to specific layers based on internal inputs. The path you take through the layers is determined by the strongest signal.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Text Context -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <span class="text-3xl">??</span>
+                        <h4 class="text-xl font-bold mt-2">Sampling</h4>
+                        <p class="text-sm text-gray-500 mt-2">The mind samples nearby layers to compare possibilities, avoiding layers that threaten survival.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <span class="text-3xl">?</span>
+                        <h4 class="text-xl font-bold mt-2">Anchoring</h4>
+                        <p class="text-sm text-gray-500 mt-2">Identity acts as the stabilizer. A strong identity keeps the anchor firm; a weak one allows drift.</p>
+                    </div>
+                </div>
+
+                <!-- Radar Chart -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-bold text-gray-700 mb-4 text-center">Factors Influencing Temporal Anchoring</h3>
+                    <div class="chart-container" style="height: 400px; max-height: 450px;">
+                        <canvas id="navigatorChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Identity & Stability -->
+        <section class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="p-8 md:p-12 bg-gray-900 text-white">
+                <h2 class="text-3xl font-bold mb-4">3. Identity as the Anchor</h2>
+                <p class="text-gray-300 max-w-4xl">
+                    Identity is the mechanism that selects which layer you inhabit. A strong sense of self creates a consistent timeline. A fragmented self leads to "drifting," where memories lose cohesion and reality feels unstable.
+                </p>
+            </div>
+            <div class="p-8">
+                <div class="chart-container">
+                    <canvas id="identityStabilityChart"></canvas>
+                </div>
+                <div class="mt-4 text-center text-sm text-gray-500 italic">
+                    Comparison of perceived temporal stability over time between Strong and Weak Identity types.
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Echo Phenomena -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1">
+                <div class="chart-container">
+                    <canvas id="echoChart"></canvas>
+                </div>
+            </div>
+            <div class="order-1 md:order-2">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">4. Echo Phenomena</h2>
+                <p class="mb-6 text-gray-600">
+                    Echoes are not supernatural; they are perceptual artifacts of displacement. When awareness slips through a seam, it picks up data from a neighboring layer.
+                </p>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 h-6 w-6 rounded-full bg-fuchsia-100 text-fuchsia-600 flex items-center justify-center font-bold text-xs mt-1">1</span>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-800">Déjà Vu</h4>
+                            <p class="text-sm text-gray-600">Overlap with a layer where the event occurred seconds earlier.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xs mt-1">2</span>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-800">Premonition / Instinct</h4>
+                            <p class="text-sm text-gray-600">Brushing a layer where a danger has already played out.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 h-6 w-6 rounded-full bg-cyan-100 text-cyan-600 flex items-center justify-center font-bold text-xs mt-1">3</span>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-800">False Memories</h4>
+                            <p class="text-sm text-gray-600">Genuine memories recorded from a different pane/layer.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 6: Displacement Events -->
+        <section class="bg-white p-8 rounded-xl shadow-md border-b-4 border-amber-500">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold text-gray-900">5. Displacement Events</h2>
+                <p class="text-gray-600 mt-2">
+                    Under intense emotional stress or trauma, the seams thin dramatically. This causes "Displacement Events"—large shifts that result in sudden, life-changing clarity or shifts in perception. The chart below correlates Stress and Focus with the Magnitude of the shift.
+                </p>
+            </div>
+            <div class="chart-container">
+                <canvas id="displacementChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Section 7: LLM Feature - Temporal Event Analyzer -->
+        <section class="bg-indigo-50 p-8 rounded-2xl shadow-xl border-t-4 border-fuchsia-500">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">6. Temporal Event Analyzer ?</h2>
+            <p class="text-gray-700 mb-6">
+                Describe an event where you felt temporal slippage—a strong déjà vu, a persistent false memory, or a moment of profound, sudden clarity. The TDT expert system will analyze your experience and explain the likely mechanics involved (e.g., Echo Type, Layer Shift Cause, Anchor State).
+            </p>
+
+            <textarea id="eventInput" rows="4" class="w-full p-4 border border-indigo-300 rounded-lg focus:ring-fuchsia-500 focus:border-fuchsia-500 text-gray-800 mb-4" placeholder="Example: 'I was driving down a street I'd never been on, but I knew exactly when the next traffic light would turn green, and it did.'"></textarea>
+
+            <button onclick="analyzeEvent()" class="flex items-center justify-center bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-200 w-full mb-6">
+                Analyze Temporal Signature ?
+            </button>
+
+            <div id="loadingIndicator" class="hidden text-center text-indigo-600 font-medium">
+                <div class="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-indigo-600 rounded-full" role="status"></div>
+                <p class="mt-2">Analyzing layers and seams...</p>
+            </div>
+
+            <div id="analysisOutput" class="p-4 bg-white border border-fuchsia-300 rounded-lg min-h-[100px] text-gray-700 leading-relaxed shadow-inner">
+                Your TDT analysis will appear here.
+            </div>
+        </section>
+        
+        <!-- Conclusion -->
+        <footer class="bg-indigo-900 text-white rounded-2xl p-10 text-center shadow-xl mb-12">
+            <h2 class="text-3xl font-bold mb-4">The Personal Layer</h2>
+            <p class="text-lg text-indigo-200 max-w-3xl mx-auto mb-8">
+                Your life is the unique record of how your awareness has traveled through this complex temporal lattice. Whether we drift, leap, or anchor, the journey through the layers becomes the story of who we are.
+            </p>
+            <div class="inline-block bg-white text-indigo-900 font-bold py-3 px-8 rounded-full shadow-lg">
+                You are the Navigator
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        const apiKey = ""; 
+
+        // --- 1. Label Wrapping Helper Function (Mandatory) ---
+        function wrapLabel(str, maxLen) {
+            if (str.length <= maxLen) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + 1 + words[i].length <= maxLen) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // --- 2. Tooltip Configuration (Mandatory) ---
+        const commonTooltipOptions = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            },
+            backgroundColor: 'rgba(31, 41, 55, 0.9)', // Tailwind Gray-900
+            titleFont: { size: 14, weight: 'bold' },
+            bodyFont: { size: 13 },
+            padding: 10,
+            cornerRadius: 4
+        };
+
+        // --- Chart 1: Reality Composition (Doughnut) ---
+        const ctxReality = document.getElementById('realityCompChart').getContext('2d');
+        new Chart(ctxReality, {
+            type: 'doughnut',
+            data: {
+                labels: ['Primary Layer Focus', 'Seam Slippage/Drift'],
+                datasets: [{
+                    data: [95, 5],
+                    backgroundColor: ['#4F46E5', '#D946EF'], // Indigo, Fuchsia
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: commonTooltipOptions,
+                    legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } }
+                },
+                cutout: '70%'
+            }
+        });
+
+        // --- Chart 2: Navigator Influences (Radar) ---
+        const navLabels = ['Emotional Intensity', 'Survival Instinct', 'Coherent Memory', 'Logical Analysis', 'Core Beliefs'];
+        const wrappedNavLabels = navLabels.map(l => wrapLabel(l, 16));
+        
+        const ctxNav = document.getElementById('navigatorChart').getContext('2d');
+        new Chart(ctxNav, {
+            type: 'radar',
+            data: {
+                labels: wrappedNavLabels,
+                datasets: [{
+                    label: 'Anchoring Influence',
+                    data: [90, 85, 75, 40, 60], // High emotion/instinct drives TDT
+                    fill: true,
+                    backgroundColor: 'rgba(6, 182, 212, 0.2)', // Cyan transparent
+                    borderColor: '#06B6D4',
+                    pointBackgroundColor: '#06B6D4',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#06B6D4'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0,0,0,0.1)' },
+                        grid: { color: 'rgba(0,0,0,0.1)' },
+                        pointLabels: {
+                            font: { size: 12, weight: 'bold' },
+                            color: '#4B5563'
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                },
+                plugins: {
+                    tooltip: commonTooltipOptions,
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // --- Chart 3: Identity Stability (Line) ---
+        const timeLabels = ['Childhood', 'Adolescence', 'Early Adult', 'Trauma Event', 'Recovery', 'Maturity'];
+        const wrappedTimeLabels = timeLabels.map(l => wrapLabel(l, 16));
+
+        const ctxIdentity = document.getElementById('identityStabilityChart').getContext('2d');
+        new Chart(ctxIdentity, {
+            type: 'line',
+            data: {
+                labels: wrappedTimeLabels,
+                datasets: [
+                    {
+                        label: 'Strong Identity Anchor',
+                        data: [80, 85, 90, 88, 92, 95], // Consistent high stability
+                        borderColor: '#10B981', // Emerald
+                        backgroundColor: 'rgba(16, 185, 129, 0.5)',
+                        tension: 0.3,
+                        borderWidth: 3
+                    },
+                    {
+                        label: 'Weak Identity Anchor',
+                        data: [60, 50, 55, 30, 45, 60], // Volatile
+                        borderColor: '#EF4444', // Red
+                        backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                        tension: 0.4,
+                        borderWidth: 3,
+                        borderDash: [5, 5]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: { display: true, text: 'Layer Stability %' },
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#D1D5DB' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#D1D5DB' }
+                    }
+                },
+                plugins: {
+                    tooltip: commonTooltipOptions,
+                    legend: { labels: { color: 'white' } }
+                }
+            }
+        });
+
+        // --- Chart 4: Echo Phenomena (Polar Area) ---
+        const echoLabels = ['Déjà Vu (Overlap)', 'Premonition (Future Brush)', 'False Memories (Alt Layer)', 'Sudden Clarity (Sync)'];
+        const wrappedEchoLabels = echoLabels.map(l => wrapLabel(l, 16));
+
+        const ctxEcho = document.getElementById('echoChart').getContext('2d');
+        new Chart(ctxEcho, {
+            type: 'polarArea',
+            data: {
+                labels: wrappedEchoLabels,
+                datasets: [{
+                    label: 'Reported Frequency',
+                    data: [85, 45, 60, 30],
+                    backgroundColor: [
+                        'rgba(217, 70, 239, 0.7)', // Fuchsia
+                        'rgba(79, 70, 229, 0.7)',  // Indigo
+                        'rgba(6, 182, 212, 0.7)',  // Cyan
+                        'rgba(245, 158, 11, 0.7)'  // Amber
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        grid: { color: 'rgba(0,0,0,0.1)' },
+                        ticks: { display: false }
+                    }
+                },
+                plugins: {
+                    tooltip: commonTooltipOptions,
+                    legend: { position: 'right' }
+                }
+            }
+        });
+
+        // --- Chart 5: Displacement Events (Bubble) ---
+        const ctxDisplace = document.getElementById('displacementChart').getContext('2d');
+        new Chart(ctxDisplace, {
+            type: 'bubble',
+            data: {
+                datasets: [{
+                    label: 'Displacement Events',
+                    data: [
+                        { x: 20, y: 30, r: 5 },  // Low stress, low focus -> Micro shift
+                        { x: 85, y: 80, r: 25 }, // High stress, high focus -> Major displacement
+                        { x: 90, y: 20, r: 15 }, // Trauma (High stress, low focus)
+                        { x: 40, y: 90, r: 10 }, // Meditation (Low stress, high focus)
+                        { x: 60, y: 60, r: 12 },
+                        { x: 75, y: 85, r: 20 }
+                    ],
+                    backgroundColor: 'rgba(245, 158, 11, 0.6)', // Amber
+                    borderColor: '#D97706',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Emotional Stress Level (0-100)' },
+                        min: 0, max: 100
+                    },
+                    y: {
+                        title: { display: true, text: 'Mental Focus/Intensity (0-100)' },
+                        min: 0, max: 100
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function() { return 'Displacement Event'; },
+                            label: function(context) {
+                                return `Stress: ${context.raw.x}, Focus: ${context.raw.y}, Magnitude: ${context.raw.r}`;
+                            }
+                        }
+                    },
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // --- LLM Analysis Function (Gemini API Integration) ---
+        async function analyzeEvent() {
+            const eventInput = document.getElementById('eventInput');
+            const analysisOutput = document.getElementById('analysisOutput');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const userEvent = eventInput.value.trim();
+
+            if (!userEvent) {
+                analysisOutput.innerHTML = '<p class="text-red-500 font-bold">Please describe a temporal event to analyze.</p>';
+                return;
+            }
+
+            loadingIndicator.classList.remove('hidden');
+            analysisOutput.innerHTML = '';
+
+            const systemPrompt = `You are a Temporal Displacement Theory (TDT) expert analyst. Your task is to analyze a user-provided personal event (e.g., déjà vu, premonition, false memory, sudden clarity) and explain it using the TDT framework. Your response must be concise, professional, and structured into three paragraphs: 
+1. **Classification:** Identify the primary TDT Echo Phenomenon (e.g., Déjà Vu, False Memory, Premonition) and the type of shift (Micro-Shift or Displacement Event).
+2. **Mechanics:** Explain the likely TDT process involved (e.g., awareness briefly sampled an adjacent layer, anchor stability was compromised by stress, or the mind achieved temporal synchronization).
+3. **Implication:** Give one piece of advice or insight based on the event's TDT profile.
+Use TDT terminology like "Primary Layer," "Seam Slippage," "Identity Anchor," and "Awareness."`;
+            
+            const userQuery = `Analyze the following personal temporal event: "${userEvent}"`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            let responseText = "Analysis failed. Please try again.";
+            const maxRetries = 3;
+            let delay = 1000;
+
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const candidate = result.candidates?.[0];
+
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        responseText = candidate.content.parts[0].text;
+                        break; 
+                    } else {
+                        throw new Error("Invalid response structure from API.");
+                    }
+                } catch (error) {
+                    console.error(`Attempt ${i + 1} failed:`, error);
+                    if (i < maxRetries - 1) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2; 
+                    }
+                }
+            }
+
+            loadingIndicator.classList.add('hidden');
+            analysisOutput.innerHTML = `<div class="prose max-w-none">${responseText.replace(/\n\n/g, '<br><br>')}</div>`;
+        }
+    </script>
+</body>
+</html>
